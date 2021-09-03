@@ -1,4 +1,4 @@
-{% set version = "0.4.6.1" %}
+{% set version = "0.4.6.2" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -11,12 +11,12 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/rlist_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/rlist/rlist_{{ version }}.tar.gz
-  sha256: bb0148b124997aa4e1c89c6c7cf45927afaf5b23caefcdc5116cfa7caef05c21
+  sha256: ebde658d897c8a27a90ebb892b9e2bad15e2ad75557a7352fb08cbb5604e0997
 
 build:
   noarch: generic
   merge_build_host: true  # [win]
-  number: 1003
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
