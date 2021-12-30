@@ -1,4 +1,4 @@
-{% set version = "0.4.6.2" %}
+{% set version = '0.4.6.2' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -7,16 +7,15 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: rlist_{{ version }}.tar.gz
   url:
     - {{ cran_mirror }}/src/contrib/rlist_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/rlist/rlist_{{ version }}.tar.gz
   sha256: ebde658d897c8a27a90ebb892b9e2bad15e2ad75557a7352fb08cbb5604e0997
 
 build:
+  merge_build_host: True  # [win]
+  number: 1
   noarch: generic
-  merge_build_host: true  # [win]
-  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
@@ -24,6 +23,7 @@ build:
 requirements:
   build:
     - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
   host:
     - r-base
     - r-xml
@@ -43,20 +43,40 @@ test:
     - "\"%R%\" -e \"library('rlist')\""  # [win]
 
 about:
-  home: https://renkun.me/rlist, https://github.com/renkun-ken/rlist, https://renkun.me/rlist-tutorial
+  home: https://renkun-ken.github.io/rlist/, https://github.com/renkun-ken/rlist, https://renkun-ken.github.io/rlist-tutorial/
   license: MIT
-  summary: Provides a set of functions for data manipulation with list objects, including mapping, filtering, grouping, sorting, updating, searching, and other useful functions. Most functions are designed to be pipeline friendly so that data processing with lists can be chained.
+  summary: Provides a set of functions for data manipulation with list objects, including mapping,
+    filtering, grouping, sorting, updating, searching, and other useful functions. Most
+    functions are designed to be pipeline friendly so that data processing with lists
+    can be chained.
   license_family: MIT
-
   license_file:
-    - {{ environ["PREFIX"] }}/lib/R/share/licenses/MIT
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/MIT'
     - LICENSE
+
 extra:
   recipe-maintainers:
     - conda-forge/r
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
-    - cbrueffer
-    - dbast
+
+# Package: rlist
+# Type: Package
+# Title: A Toolbox for Non-Tabular Data Manipulation
+# Version: 0.4.6.2
+# Author: Kun Ren <ken@renkun.me>
+# Maintainer: Kun Ren <ken@renkun.me>
+# Description: Provides a set of functions for data manipulation with list objects, including mapping, filtering, grouping, sorting, updating, searching, and other useful functions. Most functions are designed to be pipeline friendly so that data processing with lists can be chained.
+# Depends: R (>= 2.15)
+# Date: 2021-09-02
+# Suggests: testthat, stringdist
+# Imports: yaml, jsonlite, XML, data.table
+# License: MIT + file LICENSE
+# URL: https://renkun-ken.github.io/rlist/, https://github.com/renkun-ken/rlist, https://renkun-ken.github.io/rlist-tutorial/
+# BugReports: https://github.com/renkun-ken/rlist/issues
+# ByteCompile: TRUE
+# LazyData: true
+# RoxygenNote: 7.1.1
+# Encoding: UTF-8
+# NeedsCompilation: no
+# Packaged: 2021-09-02 23:36:14 UTC; ken
+# Repository: CRAN
+# Date/Publication: 2021-09-03 12:20:02 UTC
